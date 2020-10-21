@@ -21,6 +21,8 @@
 </template>
 
 <script>
+    // import { ipcRenderer } from 'electron'
+    const {ipcRenderer} = window.require('electron')
     import Pill from './Pill'
 
     export default {
@@ -28,16 +30,16 @@
         data: function() {
             return {
                 files: [],
-                groupedWords: [
-                    { name: 'i', amount: 1234 },
-                    { name: 'you', amount: 900 },
-                    { name: 'he', amount: 853 },
-                ]
+                groupedWords: []
             }
         },
         methods: {
             processSubtitles() {
-                console.log(this.files)
+                const paths = this.files.map(f => f.path)
+                ipcRenderer.send('process-subtitles', paths);
+                ipcRenderer.on('process-subtitles', (event, resp) => {
+                    this.groupedWords = resp
+                })
             }
         }
     }
