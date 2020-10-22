@@ -13,9 +13,9 @@ module.exports = words => {
             const groupedWordsArray = Object
                 .keys(groupedWords)
                 .map(key => ({ name: key, amount: groupedWords[key] }))
-                .sort((w1, w2) => w2.amount - w1.amount)
+                .sort((w1, w2) => w2.amount - w1.amount);
 
-            resolver(words)
+            resolver(groupedWordsArray)
         } catch(e) {
             reject(e)
         }

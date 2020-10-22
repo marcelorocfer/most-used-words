@@ -2,7 +2,7 @@ module.exports = rows => {
     return new Promise((resolver, reject) => {
         try {
             const words = rows
-                .filter(filterValidRows)
+                .filter(filterValidRow)
                 .map(removePunctuation)
                 .map(removeTags)
                 .reduce(mergeRows)
@@ -17,13 +17,13 @@ module.exports = rows => {
     })
 };
 
-function filterValidRows(row) {
+function filterValidRow(row) {
     const notNumber = !parseInt(row.trim());
     const notEmpty = !!row.trim();
     const notInterval = !row.includes('-->');
     return notNumber && notEmpty && notInterval
 }
 
-const removePunctuation = row => row.replace(/[,?!.-]/g, '');
+const removePunctuation = row => row.replace(/[,?!.()-]/g, '');
 const removeTags = row => row.replace(/(<[^>]+)>/ig, '').trim();
 const mergeRows = (fullText, row) => `${fullText} ${row}`;
