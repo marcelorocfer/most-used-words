@@ -18,11 +18,9 @@ module.exports = rows => {
 };
 
 function filterValidRows(row) {
-    const rowTrim = row === undefined ? '' : row.trim();
-    const rowIncludes = row === undefined ? '' : row.includes('-->');
-    const notNumber = !parseInt(rowTrim);
-    const notEmpty = !!rowTrim;
-    const notInterval = !rowIncludes;
+    const notNumber = !parseInt(row.trim());
+    const notEmpty = !!row.trim();
+    const notInterval = !row.includes('-->');
     return notNumber && notEmpty && notInterval
 }
 
